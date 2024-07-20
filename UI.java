@@ -16,8 +16,7 @@ public class UI {
     public void start() {
         String command;
         do {
-            String questionDefault = "?";
-            command = queryUser(questionDefault);
+            command = queryUser("?");
             switch (command) {
                 case "Add":
                     addBird();
@@ -41,20 +40,18 @@ public class UI {
     }
     
     public void addBird() {
-        String questionName = "Name:";
-        String name = queryUser(questionName);
-        String questionLatin = "Name in Latin:";
-        String nameLatin = queryUser(questionLatin);
+        String name = queryUser("Name:");
+        String nameLatin = queryUser("Name in Latin:");
         Bird bird = new Bird(name, nameLatin);
         birdList.put(name, bird);
     }
 
     public void addObservation() {
-        String birdSeen = queryUser(questionBird);
+        String birdSeen = queryUser("Bird?");
         if (birdList.containsKey(birdSeen)) {
             birdList.get(birdSeen).addObservation(birdSeen);
         } else {
-            System.out.println(notBird());
+            System.out.println("Not a bird!");
         }
     }
     
@@ -65,11 +62,11 @@ public class UI {
     }
     
     public void printBird() {
-        String birdToPrint = queryUser(questionBird);
+        String birdToPrint = queryUser("Bird?");
         if (birdList.containsKey(birdToPrint)) {
             System.out.println(birdList.get(birdToPrint));;
         } else {
-            System.out.println(notBird());
+            System.out.println("Not a bird!");
         }
     }
 
@@ -80,9 +77,5 @@ public class UI {
     public String queryUser(String question) {
         System.out.println(question);
         return readLine();
-    }
-
-    public String notBird() {
-        return "Not a bird!";
     }
 }
