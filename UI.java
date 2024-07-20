@@ -1,79 +1,88 @@
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Scanner;
 
 
 public class UI {
     private Scanner scanner;
-    private Bird bird;
-    private ArrayList<Bird> birdList;
-    
+    private HashMap<String, Bird> birdList;
+    private final String questionBird = "Bird?";
+
     public UI(Scanner scanner) {
         this.scanner = new Scanner(System.in);
-        this.birdList = new ArrayList<>();
+        this.birdList = new HashMap<>();
     }
-    
+
     public void start() {
         String command;
         do {
-            System.out.println("?");
-            command = scanner.nextLine();
-            if (command.equals("Add")) {
-                addBird();
-            } else if (command.equals("Observation")) {
-                addObservation();
-            } else if (command.equals("All")) {
-                printAllBirds();
-            } else if (command.equals("One")) {
-                printBird();
+            String questionDefault = "?";
+            command = queryUser(questionDefault);
+            switch (command) {
+                case "Add":
+                    addBird();
+                    break;
+                case "Observation":
+                    addObservation();
+                    break;
+                case "All":
+                    printAllBirds();
+                    break;
+                case "One":
+                    printBird();
+                    break;
+                case "Quit":
+                    break;
+                default:
+                    System.out.println("Unknown Command");
             }
         } 
         while (!command.equals("Quit"));
     }
     
     public void addBird() {
-        System.out.println("Name:");
-        String name = scanner.nextLine();
-        System.out.println("Name in Latin:");
-        String nameLatin = scanner.nextLine();
+        String questionName = "Name:";
+        String name = queryUser(questionName);
+        String questionLatin = "Name in Latin:";
+        String nameLatin = queryUser(questionLatin);
         Bird bird = new Bird(name, nameLatin);
-        birdList.add(bird);
+        birdList.put(name, bird);
     }
-    
+
     public void addObservation() {
-        int counter = 0;
-        System.out.println("Bird?");
-        String birdSeen = scanner.nextLine();
-        System.out.println(birdList);
-        for (Bird toPrint: birdList) {
-            if (toPrint.getName().equals(birdSeen)) {
-                toPrint.addObservation(birdSeen);
-                counter++;
-            }
-        }
-        if (counter == 0) {
-        System.out.println("Not a bird!");
+        String birdSeen = queryUser(questionBird);
+        if (birdList.containsKey(birdSeen)) {
+            birdList.get(birdSeen).addObservation(birdSeen);
+        } else {
+            System.out.println(notBird());
         }
     }
     
     public void printAllBirds() {
-        for (Bird printAll: birdList) {
-            System.out.println(printAll.BirdtoString());
+        for (Bird printAll: birdList.values()) {
+            System.out.println(printAll);
         }
     }
     
     public void printBird() {
-        int counter = 0;
-        System.out.println("Bird?");
-        String birdToPrint = scanner.nextLine();
-        for (Bird toPrint: birdList) {
-            if (toPrint.getName().equals(birdToPrint)) {
-                System.out.println(toPrint.BirdtoString());
-                counter++;
-            }
+        String birdToPrint = queryUser(questionBird);
+        if (birdList.containsKey(birdToPrint)) {
+            System.out.println(birdList.get(birdToPrint));;
+        } else {
+            System.out.println(notBird());
         }
-        if (counter == 0) {
-        System.out.println("Not a bird!");
-        }
+    }
+
+    public String readLine() {
+        return scanner.nextLine();
+    }
+
+    public String queryUser(String question) {
+        System.out.println(question);
+        return readLine();
+    }
+
+    public String notBird() {
+        return "Not a bird!";
     }
 }

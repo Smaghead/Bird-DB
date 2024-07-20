@@ -17,13 +17,10 @@ public class Bird {
     public String getName() {
         return name;
     }
-    
-    public String BirdtoString() {
-        return name + " (" + nameLatin + "): " + observation + " observations";
-    }
+
     
     @Override
     public String toString() {
-        return name;
+        return name + " (" + nameLatin + "): " + observation + " observations";
     }
 }
