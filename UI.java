@@ -16,7 +16,7 @@ public class UI {
     public void start() {
         String command;
         do {
-            command = queryUser("?");
+            command = queryUser("What would you like to do?");
             switch (command) {
                 case "Add":
                     addBird();
