@@ -16,7 +16,7 @@ public class UI {
     public void start() {
         String command;
         do {
-            command = queryUser("?");
+            command = queryUser("What would you like to do?");
             switch (command) {
                 case "Add":
                     addBird();
@@ -34,6 +34,7 @@ public class UI {
                     break;
                 default:
                     System.out.println("Unknown Command");
+                    System.out.println("Available commands: Add, Observation, All, One, Quit.");
             }
         } 
         while (!command.equals("Quit"));
