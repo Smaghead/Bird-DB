@@ -34,6 +34,7 @@ public class UI {
                     break;
                 default:
                     System.out.println("Unknown Command");
+                    System.out.println("Available commands: Add, Observation, All, One, Quit.");
             }
         } 
         while (!command.equals("Quit"));
